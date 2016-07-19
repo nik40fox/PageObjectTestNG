@@ -15,18 +15,17 @@ public class RegistrationTests {
     public void emptyRegistrationTest(){
         RegistrationPage registrationPageTest = new RegistrationPage();
         registrationPageTest.open();
-        registrationPageTest.fillRegistrftionfform("","","","");
-        registrationPageTest.clickJoinNowButton();
+        registrationPageTest.findFillAndSubmitRegistrationForn("","","","");
         Assert.assertEquals(registrationPageTest.gerAleartText(),"");
     }
 
-    @DataProvider
+
     @DataProvider(name = "emptyFieldsValusCombinations")
     public Object[][] createData1() {
         return new Object[][] {
                 { "sdf","","dsf","" },
                 { "sdf","sdf","dsf","sdfd" },
-                
+
         };
     }
 
