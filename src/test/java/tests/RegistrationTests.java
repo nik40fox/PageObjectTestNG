@@ -1,6 +1,8 @@
 package tests;
 
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -10,13 +12,13 @@ import pages.RegistrationPage;
  * Tests for user registration
  */
 public class RegistrationTests {
+    WebDriver driver = new FirefoxDriver();
 
     @Test
     public void emptyRegistrationTest(){
         RegistrationPage registrationPageTest = new RegistrationPage();
-        registrationPageTest.open();
-        registrationPageTest.findFillAndSubmitRegistrationForn("","","","");
-        Assert.assertEquals(registrationPageTest.gerAleartText(),"");
+        registrationPageTest.findFillAndSubmitRegistrationForn(driver,"","","","");
+        Assert.assertEquals(registrationPageTest.gerAleartText(),"Укажите имя");
     }
 
 
@@ -30,10 +32,10 @@ public class RegistrationTests {
     }
 
 
-    @Test(dataProvider = "emptyFieldsValusCombinations")
+    @Test(dataProvider = "emptyFieldsValuesCombinations")
     public void registrationAllEmptyFieldsCombinations(String first, String last, String email, String password){
         RegistrationPage registrationPageTest = new RegistrationPage();
-        registrationPageTest.open();
+        registrationPageTest.open(driver);
         registrationPageTest.fillRegistrftionfform("","","","");
         registrationPageTest.clickJoinNowButton();
         Assert.assertEquals(registrationPageTest.gerAleartText(),"");

@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * PageObject for registration page
  * Created by Nikolay on 14.07.2016.
@@ -13,7 +15,7 @@ public class RegistrationPage {
 
 
 
-    WebDriver driver = new FirefoxDriver();
+
 
     private WebElement firstNameField;
     private WebElement lastNameField;
@@ -23,18 +25,19 @@ public class RegistrationPage {
     private WebElement AleartText;
 
 
-    public void open(){
+    public void open(WebDriver driver){
         driver.get("https://www.linkedin.com/");
 
     }
 
-    public void findElements(){
+    public void findElements(WebDriver driver){
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         firstNameField = driver.findElement(By.id("first-name"));
         lastNameField = driver.findElement(By.id("last-name"));
         emailField = driver.findElement(By.id("join-email"));
         passwordField = driver.findElement(By.id("join-password"));
-        joinNowButton = driver.findElement(By.className("btn btn-primary join-btn"));
-        AleartText = driver.findElement(By.xpath(".//*[@id='pagekey-uno-reg-guest-home']/div[2]/div[2]/div/div[2]/div/div/div/div[1]/div/p/strong"));
+        joinNowButton = driver.findElement(By.cssSelector(".btn.btn-primary.join-btn"));
+
     }
 
     /**
@@ -60,10 +63,12 @@ public class RegistrationPage {
 
     }
 
-    public void findFillAndSubmitRegistrationForn(String firstName, String lastname, String email, String pasword){
-        findElements();
+    public void findFillAndSubmitRegistrationForn(WebDriver driver,String firstName, String lastname, String email, String pasword){
+        open(driver);
+        findElements(driver);
         fillRegistrftionfform(firstName, lastname, email, pasword);
         clickJoinNowButton();
+        AleartText = driver.findElement(By.xpath(".//*[@id='pagekey-uno-reg-guest-home']/div[2]/div[2]/div/div[2]/div/div/div/div[1]/div/p/strong"));
     }
     public String gerAleartText(){
         return AleartText.getText();
